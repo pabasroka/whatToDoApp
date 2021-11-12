@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:what_to_do/services/bored_api.dart';
+
+import 'activity.dart';
 
 class Loading extends StatefulWidget {
-  const Loading({Key? key}) : super(key: key);
+
+  final BoredAPI activityApi;
+
+  const Loading({Key? key, required this.activityApi}) : super(key: key);
 
   @override
   _LoadingState createState() => _LoadingState();
@@ -10,25 +16,38 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
 
-  void getSampleActivityData() async {
-    //TODO: Delete Future.delayd, add sample activity api request
-    await Future.delayed(Duration(seconds: 0), () {
-      Navigator.pushReplacementNamed(context, '/home');
-    });
+  late String activity;
+
+  // void getSampleActivityData() async {
+  //   //TODO: Delete Future.delayd, add sample activity api request
+  //   await Future.delayed(Duration(seconds: 0), () {
+  //     Navigator.pushReplacementNamed(context, '/home');
+  //   });
+  // }
+
+  void getActivity() async {
+    await widget.activityApi.getActivity();
+    activity = widget.activityApi.activity;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Activity(activity: activity),
+      ),
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    getSampleActivityData();
+    getActivity();
   }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[900],
+      backgroundColor: Colors.teal[500],
       body: const Center(
-        child: SpinKitCircle(
+        child: SpinKitWave(
           color: Colors.white,
           size: 80.0,
         ),

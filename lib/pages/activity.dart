@@ -15,7 +15,6 @@ class Activity extends StatefulWidget {
 }
 
 class _ActivityState extends State<Activity> {
-
   // late BoredAPI activity = BoredAPI(accessibility: widget.accessibility, type: widget.type, participants: widget.participants, price: widget.price);
   //
   // void getActivity() async {
@@ -32,21 +31,51 @@ class _ActivityState extends State<Activity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
+        backgroundColor: Colors.teal[200],
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               children: <Widget>[
-                Text('${widget.activity}'),
-                ElevatedButton(
-                  onPressed: () {
-                    // getActivity();
-                    Navigator.pop(context);
-                  },
-                  child: Text('wroc'),
+                Text(
+                    'Your activity:\n\n ${widget.activity}',
+                  style: TextStyle(
+                    letterSpacing: 2.0,
+                    fontFamily: 'GloriaHallelujah',
+                    color: Colors.teal[900],
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20.0,
+                  ),
+                ),
+                const SizedBox(height: 350.0),
+                Center(
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.teal),
+                    ),
+                    onPressed: () {
+                      // getActivity();
+                      var nav = Navigator.of(context);
+                      nav.pop();
+                      nav.pop();
+                      // Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'Find again',
+                      style: TextStyle(
+                        letterSpacing: 2.0,
+                        fontFamily: 'GloriaHallelujah',
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ),
                 ),
               ],
-            )
-      ),
-    ));
+            ),
+          ),
+        ));
   }
 }

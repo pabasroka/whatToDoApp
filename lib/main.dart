@@ -6,9 +6,9 @@ import 'package:what_to_do/pages/search.dart';
 
 void main() {
   runApp(MaterialApp(
-    initialRoute: '/',
+    initialRoute: '/home',
     routes: {
-      '/': (context) => Loading(),
+      // '/': (context) => Loading(),
       '/home': (context) => Home(),
       '/search': (context) => Search(),
       '/activity': (context) => Activity(),

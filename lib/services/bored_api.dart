@@ -16,17 +16,32 @@ class BoredAPI {
 
   Future<void> getActivity() async {
     try {
-      String baseUri = 'http://www.boredapi.com/api/activity?participants=$participants';
+      String baseUri = 'http://www.boredapi.com/api/activity';
       String paramUri = '';
-      if (type != 'all') {
-        paramUri += '&type=$type';
+      print(accessibility);
+      print(type);
+      print(participants);
+      print(price);
+      if (accessibility == null && price == null && participants == null && type == 'all') {
+        paramUri += '?participants=1';
+      } else {
+        paramUri += '?';
+        if (type != 'all') {
+          paramUri += 'type=$type&';
+        }
+        if (price != null) {
+          paramUri += 'price=$price&';
+        }
+        if (accessibility != null) {
+          paramUri += 'accessibility=$accessibility&';
+        }
+        if (participants != null) {
+          paramUri += 'participants=$participants&';
+        }
       }
-      if (price != null) {
-        paramUri += '&price=$price';
-      }
-      if (accessibility != null) {
-        paramUri += '&accessibility=$accessibility';
-      }
+
+      print(baseUri);
+      print(paramUri);
       // Response response = await get(Uri.parse(
       //     'http://www.boredapi.com/api/activity?type=$type&participants=$participants&price=$price&accessibility=$accessibility'));
       Response response = await get(Uri.parse(baseUri + paramUri));

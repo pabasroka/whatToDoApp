@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:what_to_do/pages/activity.dart';
 import 'package:what_to_do/services/bored_api.dart';
+import 'package:what_to_do/pages/loading.dart';
 
 enum Types {
   all,
@@ -28,20 +29,27 @@ class _SearchState extends State<Search> {
   int participants = 1;
   Types type = Types.all;
   late String activity;
+  bool isPrice = false;
+  bool isParticipants = false;
+  bool isAccessibility = false;
 
   void getActivity() async {
+    double? accessibilityToApi = isAccessibility ? accessibility : null;
+    String typeToApi = type.toString().substring(6);
+    int? participantsToApi = isParticipants ? participants : null;
+    double? priceToApi = isPrice ? price : null;
+
     BoredAPI activityApi = BoredAPI(
-        accessibility: accessibility,
-        type: type.toString().substring(6),
-        participants: participants,
-        price: price);
-    await activityApi.getActivity();
-    activity = activityApi.activity;
+        accessibility: accessibilityToApi,
+        type: typeToApi,
+        participants: participantsToApi,
+        price: priceToApi);
+
     Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Activity(activity: activity),
-      ),
+        context,
+        MaterialPageRoute(
+          builder: (context) => Loading(activityApi: activityApi),
+        ),
     );
   }
 
@@ -51,7 +59,7 @@ class _SearchState extends State<Search> {
         backgroundColor: Colors.teal[200],
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
             child: Center(
               child: Column(
                 children: <Widget>[
@@ -68,6 +76,15 @@ class _SearchState extends State<Search> {
                   ),
                   Row(
                     children: <Widget>[
+                      Checkbox(
+                        fillColor: MaterialStateColor.resolveWith((states) => Colors.teal),
+                        value: isPrice,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isPrice = value!;
+                          });
+                        },
+                      ),
                       Text(
                         'Price: ',
                         style: TextStyle(
@@ -93,6 +110,49 @@ class _SearchState extends State<Search> {
                   ),
                   Row(
                     children: <Widget>[
+                      Checkbox(
+                        fillColor: MaterialStateColor.resolveWith((states) => Colors.teal),
+                        value: isAccessibility,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isAccessibility = value!;
+                          });
+                        },
+                      ),
+                      Text(
+                        'Accessibility: ',
+                        style: TextStyle(
+                          letterSpacing: 2.0,
+                          fontFamily: 'GloriaHallelujah',
+                          color: Colors.teal[900],
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      Slider(
+                        activeColor: Colors.teal[500],
+                        value: accessibility,
+                        onChanged: (newAccessibility) {
+                          setState(() {
+                            accessibility = newAccessibility;
+                          });
+                        },
+                        divisions: 10,
+                        label: '$accessibility',
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Checkbox(
+                        fillColor: MaterialStateColor.resolveWith((states) => Colors.teal),
+                        value: isParticipants,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isParticipants = value!;
+                          });
+                        },
+                      ),
                       Text(
                         'Participants: $participants',
                         style: TextStyle(
@@ -116,12 +176,12 @@ class _SearchState extends State<Search> {
                           });
                         },
                         child: const Text(
-                            '+',
+                          '+',
                           style: TextStyle(
                             fontFamily: 'GloriaHallelujah',
                             color: Colors.white70,
                             fontWeight: FontWeight.w900,
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                           ),
                         ),
                       ),
@@ -137,40 +197,15 @@ class _SearchState extends State<Search> {
                           });
                         },
                         child: const Text(
-                            '-',
+                          '-',
                           style: TextStyle(
                             fontFamily: 'GloriaHallelujah',
                             color: Colors.white70,
                             fontWeight: FontWeight.w900,
-                            fontSize: 20.0,
+                            fontSize: 18.0,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Accessibility: ',
-                        style: TextStyle(
-                          letterSpacing: 2.0,
-                          fontFamily: 'GloriaHallelujah',
-                          color: Colors.teal[900],
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                      Slider(
-                        activeColor: Colors.teal[500],
-                        value: accessibility,
-                        onChanged: (newAccessibility) {
-                          setState(() {
-                            accessibility = newAccessibility;
-                          });
-                        },
-                        divisions: 10,
-                        label: '$accessibility',
-                      )
                     ],
                   ),
                   Row(
@@ -182,7 +217,7 @@ class _SearchState extends State<Search> {
                           fontFamily: 'GloriaHallelujah',
                           color: Colors.teal[900],
                           fontWeight: FontWeight.w600,
-                          fontSize: 20.0,
+                          fontSize: 18.0,
                         ),
                       ),
                     ],
