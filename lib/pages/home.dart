@@ -13,20 +13,21 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white10,
+      backgroundColor: Colors.teal[200],
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(30.0, 100.0, 30.0, 0.0),
           child: Center(
             child: Column(
               children: [
-                const Text(
+                Text(
                   '`What to do APP`\n lets you find an interesting activity\n\n '
                       'You can choose an activity based on:'
                       '\n -> type,\n -> price,\n -> number of participants,\n -> accessibility',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.teal[900],
                     fontFamily: 'GloriaHallelujah',
+                    fontSize: 16.0,
                   ),
                 ),
                 const SizedBox(height: 120.0),
@@ -41,7 +42,7 @@ class _HomeState extends State<Home> {
                     child: const Text(
                       'Get started',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.white70,
                         fontSize: 20.0,
                         letterSpacing: 2.0,
                         fontFamily: 'GloriaHallelujah',
@@ -49,7 +50,7 @@ class _HomeState extends State<Home> {
                     ),
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.green),
+                          MaterialStateProperty.all<Color>(Colors.teal),
                     )),
               ],
             ),
