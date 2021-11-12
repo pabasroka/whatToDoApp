@@ -14,17 +14,14 @@ class BoredAPI {
       required this.participants,
       required this.price});
 
-  Future<String> getActivity() async {
+  Future<void> getActivity() async {
     try {
       Response response = await get(Uri.parse(
           'http://www.boredapi.com/api/activity?type=$type&participants=$participants&price=$price&accessibility=$accessibility'));
       Map data = jsonDecode(response.body);
       activity = data['activity'];
-      print(activity);
-      return activity;
     } catch (e) {
       activity = "could not get activity data";
-      return activity;
     }
   }
 }

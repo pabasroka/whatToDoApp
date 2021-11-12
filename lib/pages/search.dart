@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:what_to_do/pages/activity.dart';
+import 'package:what_to_do/services/bored_api.dart';
 
 enum Types {
   recreational,
@@ -24,7 +25,25 @@ class _SearchState extends State<Search> {
   double price = 0.0;
   double accessibility = 0.0;
   int participants = 1;
-  Types? type = Types.recreational;
+  Types type = Types.recreational;
+  late String activity;
+
+  void getActivity() async {
+    BoredAPI activityApi = BoredAPI(
+        accessibility: accessibility,
+        type: type.toString().substring(6),
+        participants: participants,
+        price: price);
+    await activityApi.getActivity();
+    activity = activityApi.activity;
+    print(activity);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Activity(activity: activity),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,16 +98,16 @@ class _SearchState extends State<Search> {
                         fontSize: 20.0,
                       ),
                     ),
-                    SizedBox(width: 20.0),
+                    const SizedBox(width: 20.0),
                     ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            if (participants >= 1 && participants < 5) {
-                              participants++;
-                            }
-                          });
-                        },
-                        child: Text('+'),
+                      onPressed: () {
+                        setState(() {
+                          if (participants >= 1 && participants < 5) {
+                            participants++;
+                          }
+                        });
+                      },
+                      child: const Text('+'),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -98,7 +117,7 @@ class _SearchState extends State<Search> {
                           }
                         });
                       },
-                      child: Text('-'),
+                      child: const Text('-'),
                     ),
                   ],
                 ),
@@ -134,9 +153,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.recreational,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -148,9 +167,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.relaxation,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -166,9 +185,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.education,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -180,9 +199,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.social,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -198,9 +217,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.busywork,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -212,9 +231,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.charity,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -230,9 +249,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.cooking,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -244,9 +263,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.music,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -258,9 +277,9 @@ class _SearchState extends State<Search> {
                         leading: Radio<Types>(
                           value: Types.diy,
                           groupValue: type,
-                          onChanged: (Types? newType) {
+                          onChanged: (newType) {
                             setState(() {
-                              type = newType;
+                              type = newType!;
                             });
                           },
                         ),
@@ -298,12 +317,14 @@ class _SearchState extends State<Search> {
                           // print(participants);
                           // print(accessibility);
                           // print(type.toString().substring(6));
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Activity(price: price, participants: participants, accessibility: accessibility, type: type.toString().substring(6)),
-                            ),
-                          );
+                          getActivity();
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => Activity(price: price, participants: participants, accessibility: accessibility, type: type.toString().substring(6)),
+                          // builder: (context) => Activity(activity: activity),
+                          // ),
+                          // );
                         },
                         child: Row(
                           children: const <Widget>[
