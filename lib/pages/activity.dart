@@ -47,7 +47,7 @@ class _ActivityState extends State<Activity> {
                     fontSize: 20.0,
                   ),
                 ),
-                const SizedBox(height: 350.0),
+                const SizedBox(height: 150.0),
                 Center(
                   child: ElevatedButton(
                     style: ButtonStyle(

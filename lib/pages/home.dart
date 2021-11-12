@@ -23,7 +23,8 @@ class _HomeState extends State<Home> {
                 Text(
                   '`What to do APP`\n lets you find an interesting activity\n\n '
                       'You can choose an activity based on:'
-                      '\n -> type,\n -> price,\n -> number of participants,\n -> accessibility',
+                      '\n -> type,\n -> price,\n -> number of participants,\n -> accessibility'
+                  '\n\n https://www.boredapi.com/',
                   style: TextStyle(
                     color: Colors.teal[900],
                     fontFamily: 'GloriaHallelujah',

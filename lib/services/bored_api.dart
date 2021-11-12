@@ -48,7 +48,7 @@ class BoredAPI {
       Map data = jsonDecode(response.body);
       activity = data['activity'];
     } catch (e) {
-      activity = "could not get activity data";
+      activity = " :(\n\n Could not get activity data.\n\n Try again with different parameters";
     }
   }
 }

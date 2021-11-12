@@ -18,13 +18,6 @@ class _LoadingState extends State<Loading> {
 
   late String activity;
 
-  // void getSampleActivityData() async {
-  //   //TODO: Delete Future.delayd, add sample activity api request
-  //   await Future.delayed(Duration(seconds: 0), () {
-  //     Navigator.pushReplacementNamed(context, '/home');
-  //   });
-  // }
-
   void getActivity() async {
     await widget.activityApi.getActivity();
     activity = widget.activityApi.activity;
